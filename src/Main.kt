@@ -1,3 +1,5 @@
+import kotlin.math.max
+
 /**
  * ================================================
  * Task 2 - Gnome Fight Club
@@ -143,14 +145,21 @@ class Gnome(val name: String, var strength: Int) {
      *   NAME: dead!
      */
     fun info(): String {
-        return ""
+        var info: String = ""
+
+        info += "$name: strength $strength, health ${health}"
+        return info
     }
 
     /**
      * A gnome is alive if its health > zero
      */
     fun alive(): Boolean {
-        return false
+        if (health == 0){
+            return false
+        }else{
+            return true
+        }
     }
 
     /**
@@ -161,7 +170,11 @@ class Gnome(val name: String, var strength: Int) {
      */
     fun train(numHours: Int) {
         println("$name trains for $numHours hours...")
-
+        if (numHours > 20) {
+            strength = 10
+        }else{
+            strength += numHours/2
+        }
 
     }
 
@@ -174,8 +187,11 @@ class Gnome(val name: String, var strength: Int) {
      */
     fun fight(opponent: Gnome) {
         println("$name vs ${opponent.name}...")
-
-
+        // If one gnome is dead, do nothing
+        if (health == 0 || opponent.health == 0) return
+        //They are still fighting
+        health -= 5 * opponent.strength
+        opponent.health -= 5 * strength
     }
 
 }
